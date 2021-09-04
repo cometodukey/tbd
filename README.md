@@ -18,7 +18,15 @@ If Meson is not available on your systems repositories, you can find a guide on 
 
 ## Building
 
-Run this command to setup Meson:  
+### Configure time options
+
+When setting up the build directory pass:
+* `-Dwerror=true` to enable `-Werror`
+* `-Db_sanitize=xyz` to enable sanitisers
+
+### Setup and build
+
+Run this command to setup the Meson build directory:  
 `$ meson setup builddir/`
 
 If your version of Meson is newer than 0.55.0, you can run this:  
