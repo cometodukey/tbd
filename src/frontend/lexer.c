@@ -37,12 +37,12 @@ static inline bool at_eof(struct compile *ctx)
     return ctx->lexer->index == ctx->source->size;
 }
 
-static bool peek_match(struct compile *ctx, const unicode_char c);
+// static bool peek_match(struct compile *ctx, const unicode_char c);
 
-static inline bool at_eol(struct compile *ctx)
-{
-    return at_eof(ctx) || peek_match(ctx, '\n');
-}
+// static inline bool at_eol(struct compile *ctx)
+// {
+//     return at_eof(ctx) || peek_match(ctx, '\n');
+// }
 
 static bool peek(struct compile *ctx, unicode_char *c)
 {
@@ -62,14 +62,14 @@ static bool peek(struct compile *ctx, unicode_char *c)
     return true;
 }
 
-static bool peek_match(struct compile *ctx, const unicode_char c)
-{
-    unicode_char c2;
-    if (peek(ctx, &c2) && c == c2)
-        return true;
-    else
-        return false;
-}
+// static bool peek_match(struct compile *ctx, const unicode_char c)
+// {
+//     unicode_char c2;
+//     if (peek(ctx, &c2) && c == c2)
+//         return true;
+//     else
+//         return false;
+// }
 
 /**
  * Decode a codepoint from the current position in the source file.
