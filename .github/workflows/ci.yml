@@ -21,7 +21,7 @@ jobs:
       if: ${{ matrix.os  == 'ubuntu-latest' }}
       run: |
         sudo apt-get update -y
-        sudo apt-get install pip3
+        sudo apt-get install python3-pip
     - name: dependencies (macos)
       if: ${{ matrix.os  == 'macos-latest' }}
       run: brew install pip3
