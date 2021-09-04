@@ -1,6 +1,7 @@
 #ifndef __FORMAT_SPECIFIERS_H__
 #define __FORMAT_SPECIFIERS_H__
 
+#include <stdint.h>
 #include <limits.h>
 
 #include <tbdc/lib/platform.h>
