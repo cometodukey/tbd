@@ -27,7 +27,7 @@ jobs:
       run: brew install python3
     - name: dependencies (windows)
       if: ${{ matrix.os  == 'windows-latest' }}
-      run: chocolatey install pip3
+      run: chocolatey install python3
 
     - name: meson
       run: pip3 install meson==0.55.0 ninja>=1.7.0
