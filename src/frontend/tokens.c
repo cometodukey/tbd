@@ -75,7 +75,7 @@ void tokens_dump(const struct tokens *tokens)
     {
         const struct token *token = &tokens->token[i];
         DEBUG("Token "SIZE_FMT": { loc: { start: "SIZE_FMT", end "SIZE_FMT", line: "SIZE_FMT" }, type: %s (%d), lexeme: \"%.*s\" }",
-                i, token->loc.start, token->loc.end, token->loc.line,
+                SIZE_ARG(i), SIZE_ARG(token->loc.start), SIZE_ARG(token->loc.end), SIZE_ARG(token->loc.line),
                 stringify_type(token->type), token->type,
                 token->lexeme.size, token->lexeme.str);
     }

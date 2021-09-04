@@ -68,7 +68,7 @@ static int parse_func_params(struct compile *ctx)
             return parser_error(ctx, "type", type);
 
         DEBUG("Parameter "SIZE_FMT": { name: "SV_FMT", type: "SV_FMT" }",
-              count++, SV_ARG(name->lexeme), SV_ARG(type->lexeme));
+              SIZE_ARG(count++), SV_ARG(name->lexeme), SV_ARG(type->lexeme));
 
         const struct token *next = peek(ctx);
         if (next->type == TOKEN_COMMA)

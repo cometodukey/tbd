@@ -92,7 +92,7 @@ void source_error(const char *file,
     assert_nonnull(loc);
     assert_nonnull(fmt);
 
-    log_error("In %s:"SIZE_FMT":"SIZE_FMT":", file, loc->line, loc->start);
+    log_error("In %s:"SIZE_FMT":"SIZE_FMT":", file, SIZE_ARG(loc->line), SIZE_ARG(loc->start));
 
     fputc('\n', stderr);
 
@@ -103,9 +103,9 @@ void source_error(const char *file,
         end_of_line = data + size;
 
     log_padln("${bold}%s:${reset}\n", file);
-    log_padln(""SIZE_FMT" %s %.*s", loc->line, column_char(), (int)(end_of_line - start_of_line), start_of_line);
+    log_padln(""SIZE_FMT" %s %.*s", SIZE_ARG(loc->line), column_char(), (int)(end_of_line - start_of_line), start_of_line);
 
-    const int line_len = snprintf(NULL, 0, ""SIZE_FMT"", loc->line);
+    const int line_len = snprintf(NULL, 0, ""SIZE_FMT"", SIZE_ARG(loc->line));
 
     const size_t len = loc->end - loc->start - 1;
     const char *corner = len > 1 ? left_upper_corner_char() : column_char();
