@@ -5,6 +5,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+#include <tbdc/lib/format-specifiers.h>
+
 #define BUG(...) log_bug(__VA_ARGS__)
 #define DEBUG(...) log_debug(__VA_ARGS__)
 

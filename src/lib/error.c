@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -10,21 +11,23 @@ struct table_chars
 {
     const char *column;
     const char *row;
-    const char *left_corner;
+    const char *left_lower_corner;
+    const char *left_upper_corner;
 };
 
 static struct table_chars ascii_table = {
     .column = "|",
     .row = "-",
-    .left_corner = "`"
+    .left_lower_corner = "`",
+    .left_upper_corner = ""
 };
 
 static struct table_chars utf8_table = {
     .column = "│",
     .row = "─",
-    .left_corner = "└"
+    .left_lower_corner = "└",
+    .left_upper_corner = "┌"
 };
-
 
 
 static struct table_chars *get_table_chars(void)
@@ -39,9 +42,19 @@ static const char *column_char(void)
     return get_table_chars()->column;
 }
 
-static const char *left_corner_char(void)
+static const char *row_char(void)
 {
-    return get_table_chars()->left_corner;
+    return get_table_chars()->row;
+}
+
+static const char *left_lower_corner_char(void)
+{
+    return get_table_chars()->left_lower_corner;
+}
+
+static const char *left_upper_corner_char(void)
+{
+    return get_table_chars()->left_upper_corner;
 }
 
 static const char *find_start_of_line(const size_t size, const char data[size], const size_t line)
@@ -79,7 +92,7 @@ void source_error(const char *file,
     assert_nonnull(loc);
     assert_nonnull(fmt);
 
-    log_error("In %s:%zu:%zu:", file, loc->line, loc->start);
+    log_error("In %s:"SIZE_FMT":"SIZE_FMT":", file, loc->line, loc->start);
 
     fputc('\n', stderr);
 
@@ -90,15 +103,22 @@ void source_error(const char *file,
         end_of_line = data + size;
 
     log_padln("${bold}%s:${reset}\n", file);
-    log_padln("%zu %s %.*s", loc->line, column_char(), (int)(end_of_line - start_of_line), start_of_line);
+    log_padln(""SIZE_FMT" %s %.*s", loc->line, column_char(), (int)(end_of_line - start_of_line), start_of_line);
 
-    const int line_len = snprintf(NULL, 0, "%zu", loc->line);
+    const int line_len = snprintf(NULL, 0, ""SIZE_FMT"", loc->line);
+
+    const size_t len = loc->end - loc->start - 1;
+    const char *corner = len > 1 ? left_upper_corner_char() : column_char();
+    log_pad("%*.s %s ", line_len, "", column_char());
+    log_none("%*.s${magenta}%s", loc->start - 2, "", corner);
+
+    for (size_t i = 0; i < len; i++)
+        log_none("%s", row_char());
+
+    log_noneln("${reset}");
 
     log_pad("%*.s %s ", line_len, "", column_char());
-    log_noneln("%*.s${magenta}%s${reset}", loc->start - 1, "", column_char());
-
-    log_pad("%*.s %s ", line_len, "", column_char());
-    log_none("%*.s${magenta}%s${reset}  ", loc->start - 1, "", left_corner_char());
+    log_none("%*.s${magenta}%s${reset}  ", loc->start - 2, "", left_lower_corner_char());
 
     va_list args;
     va_start(args, fmt);

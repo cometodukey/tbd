@@ -2,6 +2,7 @@
 #define __ERROR_H__
 
 #include <tbdc/frontend/tokens.h>
+#include <tbdc/lib/format-specifiers.h>
 
 void source_error(const char *file,
                   const size_t size,

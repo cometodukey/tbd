@@ -26,7 +26,7 @@ void token_push(struct compile *ctx, const struct token *token)
 
     struct tokens *tokens = ctx->tokens;
 
-    if (tokens->size == lengthof(tokens->token))
+    if (tokens->size >= lengthof(tokens->token))
     {
         compile_error(ctx->source->file, "Exhausted token scratch space");
     }
@@ -60,25 +60,23 @@ static const char *stringify_type(const enum token_type type)
         ADD_CASE(TOKEN_EOF)
 
         default:
-            assert_true(!"Received unknown token type!");
             BUG("%d is an unknown token type", type);
+            return NULL;
     }
-
-    return "";
 
     #undef ADD_CASE
 }
 
 void tokens_dump(const struct tokens *tokens)
 {
+    assert_nonnull(tokens);
+
     for (size_t i = 0; i < tokens->size; i++)
     {
         const struct token *token = &tokens->token[i];
-        DEBUG("Token %zu: { loc: { start: %zu, end %zu, line: %zu }, type: %s (%d), lexeme: \"%.*s\" }",
+        DEBUG("Token "SIZE_FMT": { loc: { start: "SIZE_FMT", end "SIZE_FMT", line: "SIZE_FMT" }, type: %s (%d), lexeme: \"%.*s\" }",
                 i, token->loc.start, token->loc.end, token->loc.line,
                 stringify_type(token->type), token->type,
                 token->lexeme.size, token->lexeme.str);
-
-        (void)stringify_type(token->type);
     }
 }

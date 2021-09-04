@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include <tbdc/frontend/parser.h>
 #include <tbdc/lib/assert.h>
 #include <tbdc/lib/error.h>
@@ -68,7 +67,7 @@ static int parse_func_params(struct compile *ctx)
         if (type->type != TOKEN_IDENT)
             return parser_error(ctx, "type", type);
 
-        DEBUG("Parameter %zu: { name: "SV_FMT", type: "SV_FMT" }",
+        DEBUG("Parameter "SIZE_FMT": { name: "SV_FMT", type: "SV_FMT" }",
               count++, SV_ARG(name->lexeme), SV_ARG(type->lexeme));
 
         const struct token *next = peek(ctx);
@@ -122,6 +121,7 @@ static int parse_stmt(struct compile *ctx)
 static int parse_stmts(struct compile *ctx)
 {
     /* FIXME */
+    return 0;
     return parse_stmt(ctx);
 }
 
@@ -161,6 +161,8 @@ static int parse_func(struct compile *ctx)
     const struct token *rbrace = consume(ctx);
     if (rbrace->type != TOKEN_RBRACE)
         return parser_error(ctx, "'}'", rbrace);
+
+    // ast_func_create(ctx, &name->lexeme);
 
     return 0;
 }
