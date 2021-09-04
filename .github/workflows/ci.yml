@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         cc: [gcc, clang]
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
 
     steps:
     - name: checkout
@@ -19,7 +19,7 @@ jobs:
     - name: submodules
       run: git submodule update --init --recursive
 
-    - name: dependencies (linux)
+    - name: dependencies (ubuntu)
       if: ${{ matrix.os  == 'ubuntu-latest' }}
       run: |
         sudo apt-get update -y
@@ -27,21 +27,11 @@ jobs:
     - name: dependencies (macos)
       if: ${{ matrix.os  == 'macos-latest' }}
       run: brew install python3
-    - name: dependencies (windows)
-      if: ${{ matrix.os  == 'windows-latest' }}
-      run: chocolatey install python3
 
     - name: meson
       run: pip3 install meson==0.55.0 ninja>=1.7.0
 
     - name: build
-      if: ${{ matrix.os != 'windows-latest' }}
       run: |
         meson setup builddir -Dwerror=true -Db_sanitize=address,undefined
-        meson compile -C builddir
-
-    - name: build windows
-      if: ${{ matrix.os == 'windows-latest' }}
-      run: |
-        meson setup builddir -Dwerror=false
         meson compile -C builddir
