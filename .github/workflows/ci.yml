@@ -33,6 +33,13 @@ jobs:
       run: pip3 install meson==0.55.0 ninja>=1.7.0
 
     - name: build
+      if: ${{ matrix.os != 'windows-latest' }}
       run: |
-        meson setup builddir
-        ninja -C builddir
+        meson setup builddir -Dwerror=true -Db_sanitize=address,undefined
+        meson compile -C builddir
+
+    - name: build windows
+      if: ${{ matrix.os == 'windows-latest' }}
+      run: |
+        meson setup builddir -Dwerror=false
+        meson compile -C builddir

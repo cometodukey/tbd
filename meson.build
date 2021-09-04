@@ -4,7 +4,6 @@ project('tbd', 'c',
     meson_version : '>=0.55.0',
     default_options : [
         'c_std=c99',
-        'b_sanitize=address,undefined',
         'werror=false',
         'warning_level=3'
     ]
