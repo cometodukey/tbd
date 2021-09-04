@@ -24,7 +24,7 @@ jobs:
         sudo apt-get install python3-pip
     - name: dependencies (macos)
       if: ${{ matrix.os  == 'macos-latest' }}
-      run: brew install pip3
+      run: brew install python3
     - name: dependencies (windows)
       if: ${{ matrix.os  == 'windows-latest' }}
       run: chocolatey install pip3
