@@ -6,6 +6,8 @@ jobs:
   build:
     name: ${{ matrix.os }} ${{ matrix.cc }}
     runs-on: ${{ matrix.os }}
+    env:
+      CC: ${{ matrix.cc }}
     strategy:
       matrix:
         cc: [gcc, clang]
