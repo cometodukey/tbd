@@ -15,9 +15,9 @@
 
 /* Here lie hacks. */
 
-#if SIZE_MAX <= ULONG_MAX
-# define SIZE_FMT "%lu"
-# define SIZE_ARG(x) ((unsigned long)x)
+#if SIZE_MAX <= ULLONG_MAX
+# define SIZE_FMT "%llu"
+# define SIZE_ARG(x) ((unsigned long long)x)
 #else
 # error SIZE_MAX and SIZE_ARG are not implemented for this precision of size_t
 #endif
