@@ -30,7 +30,7 @@ jobs:
       run: chocolatey install pip3
 
     - name: meson
-      run: pip3 install meson==0.55.0
+      run: pip3 install meson==0.55.0 ninja>=1.7.0
 
     - name: build
       run: |
