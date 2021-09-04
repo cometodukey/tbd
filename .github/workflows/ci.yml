@@ -9,17 +9,27 @@ jobs:
     strategy:
       matrix:
         cc: [gcc, clang]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
-        deps: [apt-get install, brew install, chocolatey install]
+        os: [ubuntu-latest, windows-latest, macos-latest]
 
-  steps:
-  - name: submodules
-    run: git submodule update --init --recursive
-  - name: checkout
-    uses: actions/checkout@v2
-  - name: dependencies
-    run: ${{ matrix.deps }} meson
-  - name: setup
-    run: |
-      meson setup builddir
-      meson compile -C builddir
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: submodules
+      run: git submodule update --init --recursive
+
+    - name: dependencies (linux)
+      if: ${{ matrix.os  == 'ubuntu-latest' }}
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install meson
+    - name: dependencies (macos)
+      if: ${{ matrix.os  == 'macos-latest' }}
+      run: brew install meson
+    - name: dependencies (windows)
+      if: ${{ matrix.os  == 'windows-latest' }}
+      run: chocolatey install meson
+
+    - name: build
+      run: |
+        meson setup builddir
+        ninja -C builddir
