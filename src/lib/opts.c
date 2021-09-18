@@ -33,7 +33,7 @@ const struct opts *parse_opts(size_t argc, const char **argv)
 
     if (str_equal(cmd, "compile"))
         opts.cmd = OPT_COMPILE;
-    else if (str_equal(cmd), "explain")
+    else if (str_equal(cmd, "explain"))
         opts.cmd = OPT_EXPLAIN;
     else if (str_equal(cmd, "help"))
         opts.cmd = OPT_HELP;

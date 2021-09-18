@@ -6,6 +6,7 @@
 enum opt_cmd
 {
     OPT_COMPILE,
+    OPT_EXPLAIN,
     OPT_HELP,
 
     OPT_OTHER
