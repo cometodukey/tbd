@@ -17,6 +17,9 @@ int main(int argc, const char *argv[])
             compile(opts);
             break;
 
+        case OPT_EXPLAIN:
+            break;
+
         case OPT_HELP:
             // usage();
             break;
